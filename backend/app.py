@@ -96,10 +96,6 @@ def haversine(lat1, lon1, lat2, lon2):
     return round(R * c, 2)
 
 # --- Auth Routes ---
-@app.route("/")
-def home():
-    return "Backend is running successfully!"
-
 @app.route('/api/auth/login', methods=['POST'])
 def login():
     data = request.json
