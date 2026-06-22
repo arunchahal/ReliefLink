@@ -12,6 +12,11 @@ from models import db, User, SOSRequest, Resource, LocationUpdate, Shelter, Risk
 from config import Config
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_socketio import SocketIO, emit
+import os
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
 
 app = Flask(__name__)
 app.config.from_object(Config)
