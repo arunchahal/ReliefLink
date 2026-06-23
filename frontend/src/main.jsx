@@ -9,10 +9,22 @@ createRoot(document.getElementById('root')).render(
   </StrictMode>,
 )
 
+// Unregister any active service workers to prevent intercepting API requests and caching issues
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
-      .then((reg) => console.log('[PWA] Service Worker registered with scope:', reg.scope))
-      .catch((err) => console.error('[PWA] Service Worker registration failed:', err));
+  navigator.serviceWorker.getRegistrations().then((registrations) => {
+    for (let registration of registrations) {
+      registration.unregister().then(() => {
+        console.log('[PWA] Service Worker unregistered successfully.');
+      });
+    }
+  });
+}
+
+// Clear all caches to ensure fresh assets are fetched from the network
+if ('caches' in window) {
+  caches.keys().then((names) => {
+    for (let name of names) {
+      caches.delete(name);
+    }
   });
 }
