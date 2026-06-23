@@ -1,17 +1,7 @@
 import axios from 'axios';
 
-const getBaseURL = () => {
-  if (import.meta.env.VITE_API_BASE_URL) {
-    return import.meta.env.VITE_API_BASE_URL;
-  }
-  if (import.meta.env.DEV) {
-    return 'http://127.0.0.1:5001';
-  }
-  return 'https://relieflink-backend.onrender.com';
-};
-
 const api = axios.create({
-  baseURL: getBaseURL(),
+  baseURL: 'https://relieflink-backend.onrender.com',
 });
 
 api.interceptors.request.use((config) => {
