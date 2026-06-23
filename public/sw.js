@@ -47,6 +47,11 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
+  // Ignore non-GET requests (e.g. POST, PUT, DELETE) to prevent Cache Storage API errors
+  if (event.request.method !== 'GET') {
+    return;
+  }
+
   const { request } = event;
   // For navigation requests, try network first, then fallback to cache or offline page
   if (request.mode === 'navigate') {
