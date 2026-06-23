@@ -20,6 +20,13 @@ app = Flask(__name__)
 def home():
     return "ReliefLink Backend Running"
 
+@app.get("/ip")
+def ip():
+    import requests
+    return {
+        "ip": requests.get("https://api.ipify.org").text
+}
+
 app.config.from_object(Config)
 CORS(app)
 db.init_app(app)

@@ -1,6 +1,16 @@
 import { io } from 'socket.io-client';
 
-const SOCKET_URL = 'https://relieflink-backend.onrender.com';
+const getBaseURL = () => {
+  if (import.meta.env.VITE_API_BASE_URL) {
+    return import.meta.env.VITE_API_BASE_URL;
+  }
+  if (import.meta.env.DEV) {
+    return 'http://127.0.0.1:5001';
+  }
+  return 'https://relieflink-backend.onrender.com';
+};
+
+const SOCKET_URL = getBaseURL();
 
 export const socket = io(SOCKET_URL, {
   autoConnect: false,
