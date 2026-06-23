@@ -1,6 +1,22 @@
 import { io } from 'socket.io-client';
 
-const SOCKET_URL = 'https://relieflink-backend.onrender.com';
+const getSocketURL = () => {
+  if (import.meta.env && import.meta.env.VITE_API_BASE_URL) {
+    let url = import.meta.env.VITE_API_BASE_URL;
+    if (url.endsWith('/api')) url = url.slice(0, -4);
+    if (url.endsWith('/api/')) url = url.slice(0, -5);
+    return url;
+  }
+  if (typeof window !== 'undefined') {
+    const hostname = window.location.hostname;
+    if (hostname === 'localhost' || hostname === '127.0.0.1') {
+      return 'http://127.0.0.1:10000';
+    }
+  }
+  return 'https://relieflink-backend.onrender.com';
+};
+
+const SOCKET_URL = getSocketURL();
 
 export const socket = io(SOCKET_URL, {
   autoConnect: false,
